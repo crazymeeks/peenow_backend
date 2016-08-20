@@ -30,7 +30,7 @@ trait ProcessAndValidateAreas{
 	 */
 	public function store(Request $request){
 		try{
-			return $this->areas->create($request->all());
+			
 			if($this->areas->create($request->all())){
 				// return array('status' => 200,
 				// 			 'message' => 'Success'
