@@ -61,8 +61,8 @@ trait ProcessAndValidateAreas{
 		try{
 			// Get data using id(primary key)
 			if(count($latlng) == 1){
-				if(!empty($this->areas->find($latlng))){
-					return $this->areas->find($latlng);
+				if(!empty($this->areas->find($latlng[0]))){
+					return $this->areas->find($latlng[0]);
 				}
 				return $this->responseRequestStatus(true, "No record");
 			}
