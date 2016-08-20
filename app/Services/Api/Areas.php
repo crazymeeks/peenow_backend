@@ -43,14 +43,19 @@ class Areas implements AreasContract {
 
 	/**
 	 * The query
-	 * @param string $str     The query string to pass
-	 * @return 
+	 *
+	 * This is in kilometer. The 0.5 below is equivalent to 500meters
+	 * we will search available cr within 500meters
+	 *
+	 * @param string $lat     The latitude
+	 * @param string $lng     The longitude
+	 * @return array
 	 */
 	public function getLocationRadius($lat, $lng){
 		$areas = DB::table('areas')
                      ->select(DB::raw('*,
     								( 6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( `lat` ) ) ) ) AS distance'))
-                     ->having('distance', '<', 30)
+                     ->having('distance', '<=', 0.5)
                      ->get();
                      return $areas;
 	}
