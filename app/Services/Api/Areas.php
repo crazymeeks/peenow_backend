@@ -60,4 +60,14 @@ class Areas implements AreasContract {
                      return $areas;
 	}
 
+	/**
+	 * Find record by id(primary key)
+	 *
+	 * @param int $id
+	 * @return App\Area
+	 */
+	public function find($id){
+		return Area::find($id)->get();
+	}
+
 }

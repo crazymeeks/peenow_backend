@@ -46,9 +46,6 @@ trait ProcessAndValidateAreas{
 	}
 
 	
-	public function create($lat, $lng){
-		
-	}
 	/**
 	 * Query to database
 	 *
@@ -61,10 +58,12 @@ trait ProcessAndValidateAreas{
 	public function show($latlng){
 		$latlng = explode(",", $latlng);
 		try{
-			// invalid parameter: possible 1111
-			// expected 1111,11111
+			// Get data using id(primary key)
 			if(count($latlng) == 1){
-				return $this->responseRequestStatus(false, "Invalid parameter. Please separate latitude and longitude by comma");
+				if(!empty($this->areas->find($latlng))){
+					return $this->areas->find($latlng);
+				}
+				return $this->responseRequestStatus(true, "No record");
 			}
 			$lat = $latlng[0];
 			$lng = $latlng[1];
