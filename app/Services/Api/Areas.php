@@ -31,8 +31,9 @@ class Areas implements AreasContract {
 	{
 		//print_r($data);exit;
 		if(Area::create([
-			'image_text' => $data['image_text'],
-			'description' => $data['description'],
+			'image_text' 	=> $data['image_text'],
+			'description' 	=> $data['description'],
+			'image_thumb' 	=> $data['image_thumb'],
 			'lat' => $data['lat'],
 			'lng' => $data['lng'],
 		])){
