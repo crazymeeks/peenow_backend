@@ -29,6 +29,7 @@ class Areas implements AreasContract {
 	 */
 	public function create(array $data)
 	{
+		return $data;
 		//print_r($data);exit;
 		if(Area::create([
 			'image_text' 	=> $data['image_text'],
