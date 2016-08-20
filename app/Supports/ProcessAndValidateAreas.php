@@ -8,97 +8,70 @@
 
 use Illuminate\Http\Request;
 use Exception;
+use DB;
 trait ProcessAndValidateAreas{
 
 	protected $areas;
-
-	/**
-	 * Save data
-	 * @param none
-	 * @return
-	 */
-	public function getCreate(){
-
-	}
-
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function getIndex()
+	public function index()
 	{
-		return array("status" => 'success');
+		return $this->responseRequestStatus();
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Store new data
 	 *
-	 * @return Response
+	 * @return json response
 	 */
-	public function saveArea(Request $request){
+	public function store(Request $request){
 		try{
 			if($this->areas->create($request->all())){
-				return true;
+				// return array('status' => 200,
+				// 			 'message' => 'Success'
+				// );
+				return $this->responseRequestStatus();
 			}
-			return false;
+			// return array('status' => 500,
+			// 			 'message' => 'Error'
+			// 	);
+			return $this->responseRequestStatus(false);
 		}catch(Exception $e){
 
 		}
 	}
 
+	
+	public function create($lat, $lng){
+		
+	}
 	/**
-	 * Store a newly created resource in storage.
+	 * Query to database
 	 *
-	 * @return Response
+	 * This will get all the possible area
+	 * within 1km
+	 *
+	 * @param string $latlng     The latitude and longitude delimited by comma (,)
+	 * @return App\Area
 	 */
-	public function store()
-	{
-		//
+	public function show($latlng){
+		$latlng = explode(",", $latlng);
+		try{
+			// invalid parameter: possible 1111
+			// expected 1111,11111
+			if(count($latlng) == 1){
+				return $this->responseRequestStatus(false, "Invalid parameter. Please separate latitude and longitude by comma");
+			}
+			$lat = $latlng[0];
+			$lng = $latlng[1];
+			return $this->areas->getLocationRadius($lat, $lng);
+		}catch(Exception $e){
+			return $this->responseRequestStatus(false);
+		}
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 }

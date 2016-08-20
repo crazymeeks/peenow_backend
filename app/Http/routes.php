@@ -13,16 +13,22 @@
 
 
 Route::group(['prefix' => 'api'], function(){
-	Route::post('save-area', 'Api\AreasController@saveArea');
+	// RESTful API
+	Route::resource('areas', 'Api\AreasController');
 });
 
-// Route::get('/{q}', function($q){
-// 	$handle = fopen("http://maps.google.com/maps/geo?q=".urlencode($q)."&sensor=false&oe=utf8&gl=en&output=csv&key=AIzaSyBg0YHs4oxJr0jAr2qg-qzTpZEAggsEzZk","r");
 
-// 		$data = fgetcsv($handle);
-// 		return $data;
-// });
-//Route::get('/', 'WelcomeController@index');
+/**
+ * API calls
+ *
+ * Get all list of available location within the given latlng
+ * pee.storyteching.ph/api/areas/{lat,lng}
+ *
+ * Save new area - This must a post method
+ * pee.storyteching.ph/api/areas
+ *
+ */
+
 
 Route::get('home', 'HomeController@index');
 

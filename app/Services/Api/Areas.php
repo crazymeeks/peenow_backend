@@ -3,7 +3,7 @@
 use App\Area;
 use Validator;
 use App\Contracts\AreasInterface as AreasContract;
-
+use DB;
 class Areas implements AreasContract {
 
 	/**
@@ -46,8 +46,13 @@ class Areas implements AreasContract {
 	 * @param string $str     The query string to pass
 	 * @return 
 	 */
-	public function query($str){
-
+	public function getLocationRadius($lat, $lng){
+		$areas = DB::table('areas')
+                     ->select(DB::raw('*,
+    								( 6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( `lat` ) ) ) ) AS distance'))
+                     ->having('distance', '<', 30)
+                     ->get();
+                     return $areas;
 	}
 
 }

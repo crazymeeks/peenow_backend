@@ -5,5 +5,5 @@ interface AreasInterface{
 
 	public function create(array $data);
 
-	public function query($string);
+	public function getLocationRadius($lat, $lng);
 }
