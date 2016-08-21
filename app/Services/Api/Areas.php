@@ -57,7 +57,7 @@ class Areas implements AreasContract {
 	public function getLocationRadius($lat, $lng, $thumb = true){
 		if($thumb){
 			$areas = DB::table('areas')
-                     ->select(DB::raw('id, image_thumb, lat, lng,
+                     ->select(DB::raw('id, image_thumb, description, lat, lng,
     								( 6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( `lat` ) ) ) ) AS distance'))
                      ->having('distance', '<=', 0.5)
                      ->get();
@@ -74,7 +74,7 @@ class Areas implements AreasContract {
 	 */
 	public function find($id){
 		$areas = DB::table('areas')
-                     ->select(DB::raw('id, image_text, lat, lng'))
+                     ->select(DB::raw('id, image_text, description,lat, lng'))
                      ->where('id', '=', $id)
                      ->get();
 

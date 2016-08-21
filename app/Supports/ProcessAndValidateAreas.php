@@ -22,7 +22,7 @@ trait ProcessAndValidateAreas{
 	public function index()
 	{
 		$areas = DB::table('areas')
-                     ->select(DB::raw('id, image_thumb, lat, lng'
+                     ->select(DB::raw('id, description, image_thumb, lat, lng'
     								))
                      ->get();
         return $areas;
@@ -76,18 +76,26 @@ trait ProcessAndValidateAreas{
 			//m = km x 1,000
 			$results = $this->areas->getLocationRadius($lat, $lng, true);
 			if(count((array)$results) != 0){
-				
+				return $results;
 				$res = array();
 				foreach($results as $result){
-					$res[]['id'] = $result->id;
-					$res[]['image_thumb'] = $result->image_thumb;
-					$res[]['lat'] = $result->lat;
-					$res[]['lng'] = $result->lng;
+					$res['id'][] = $result->id;
+					$res['image_thumb'][] = $result->image_thumb;
+					$res['lat'][] = $result->lat;
+					$res['lng'][] = $result->lng;
 					$distance_in_meter = $result->distance * 1000;
-					$res[]['distance'] = round($distance_in_meter, 2);
+					$res['distance'][] = round($distance_in_meter, 2);
 				}
 				return $res;
-			}
+				foreach($res as $re){
+					echo "<pre>";
+					print_r($re);
+						//echo $re['image_thumb'] . '<br>';
+					
+				}
+				exit;
+				return $res;
+			}exit;
 			return $this->responseRequestStatus(false);
 		}catch(Exception $e){
 			return $this->responseRequestStatus(false);
