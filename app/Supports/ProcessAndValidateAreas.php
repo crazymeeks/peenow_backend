@@ -76,11 +76,17 @@ trait ProcessAndValidateAreas{
 			//m = km x 1,000
 			$results = $this->areas->getLocationRadius($lat, $lng, true);
 			if(count((array)$results) != 0){
-				return $results;
-				// $res = array();
-				// foreach($results as $result){
-
-				// }
+				
+				$res = array();
+				foreach($results as $result){
+					$res[]['id'] = $result->id;
+					$res[]['image_thumb'] = $result->image_thumb;
+					$res[]['lat'] = $result->lat;
+					$res[]['lng'] = $result->lng;
+					$distance_in_meter = $result->distance * 1000;
+					$res[]['distance'] = round($distance_in_meter, 2);
+				}
+				return $res;
 			}
 			return $this->responseRequestStatus(false);
 		}catch(Exception $e){
