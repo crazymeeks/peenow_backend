@@ -9,6 +9,7 @@
 use Illuminate\Http\Request;
 use Exception;
 use DB;
+use App\Areas;
 trait ProcessAndValidateAreas{
 
 	protected $areas;
@@ -20,7 +21,7 @@ trait ProcessAndValidateAreas{
 	 */
 	public function index()
 	{
-		return $this->responseRequestStatus();
+		return Areas::all();
 	}
 
 	/**
@@ -68,7 +69,16 @@ trait ProcessAndValidateAreas{
 			}
 			$lat = $latlng[0];
 			$lng = $latlng[1];
-			return $this->areas->getLocationRadius($lat, $lng, true);
+			//m = km x 1,000
+			$results = $this->areas->getLocationRadius($lat, $lng, true);
+			if(count((array)$results) != 0){
+				return $results;
+				// $res = array();
+				// foreach($results as $result){
+
+				// }
+			}
+			return $this->responseRequestStatus(false);
 		}catch(Exception $e){
 			return $this->responseRequestStatus(false);
 		}
