@@ -21,7 +21,11 @@ trait ProcessAndValidateAreas{
 	 */
 	public function index()
 	{
-		return Areas::all();
+		$areas = DB::table('areas')
+                     ->select(DB::raw('id, image_thumb, lat, lng'
+    								))
+                     ->get();
+        return $areas;
 	}
 
 	/**
