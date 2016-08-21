@@ -51,15 +51,19 @@ class Areas implements AreasContract {
 	 *
 	 * @param string $lat     The latitude
 	 * @param string $lng     The longitude
+	 * @param bool $thumb     Check if we need to return image thumb only
 	 * @return array
 	 */
-	public function getLocationRadius($lat, $lng){
-		$areas = DB::table('areas')
-                     ->select(DB::raw('*,
+	public function getLocationRadius($lat, $lng, $thumb = true){
+		if($thumb){
+			$areas = DB::table('areas')
+                     ->select(DB::raw('id, image_thumb, lat, lng,
     								( 6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( `lat` ) ) ) ) AS distance'))
                      ->having('distance', '<=', 0.5)
                      ->get();
-                     return $areas;
+		}
+		
+        return $areas;
 	}
 
 	/**
@@ -69,7 +73,12 @@ class Areas implements AreasContract {
 	 * @return App\Area
 	 */
 	public function find($id){
-		return Area::find($id)->get();
+		$areas = DB::table('areas')
+                     ->select(DB::raw('id, image_text, lat, lng'))
+                     ->where('id', '=', $id)
+                     ->get();
+
+        return $areas;
 	}
 
 }

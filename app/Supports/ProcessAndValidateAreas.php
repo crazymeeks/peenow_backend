@@ -61,14 +61,14 @@ trait ProcessAndValidateAreas{
 		try{
 			// Get data using id(primary key)
 			if(count($latlng) == 1){
-				if(!$this->areas->find($latlng[0])->isEmpty()){
+				if(count((array)$this->areas->find($latlng[0])) != 0){
 					return $this->areas->find($latlng[0]);
 				}
 				return $this->responseRequestStatus(true, "No record");
 			}
 			$lat = $latlng[0];
 			$lng = $latlng[1];
-			return $this->areas->getLocationRadius($lat, $lng);
+			return $this->areas->getLocationRadius($lat, $lng, true);
 		}catch(Exception $e){
 			return $this->responseRequestStatus(false);
 		}
