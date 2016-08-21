@@ -19,12 +19,6 @@ class AreasController extends Controller {
 	 * @return void
 	 */
 	public function __construct(AreasContract $areas){
-
-		// CacheManager::setDefaultConfig(array(
-		//     "path" => '/tmp', // or in windows "C:/tmp/"
-		// ));
-		// $this->cache_instance = $cm;//CacheManager::getInstance('files');
-
 		$this->areas = $areas;
 	}
 

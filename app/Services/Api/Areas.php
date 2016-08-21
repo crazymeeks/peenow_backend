@@ -1,25 +1,17 @@
 <?php namespace App\Services\Api;
 
+/**
+ * Core API for serving content, saving data
+ *
+ * @author Jeff Claud<jeffers.claud@nuworks.ph>
+ * @date Aug. 21, 2016
+ */
+
 use App\Area;
 use Validator;
 use App\Contracts\AreasInterface as AreasContract;
 use DB;
-class Areas implements AreasContract {
-
-	/**
-	 * Get a validator for an incoming registration request.
-	 *
-	 * @param  array  $data
-	 * @return \Illuminate\Contracts\Validation\Validator
-	 */
-	// public function validator(array $data)
-	// {
-	// 	return Validator::make($data, [
-	// 		'name' => 'required|max:255',
-	// 		'email' => 'required|email|max:255|unique:users',
-	// 		'password' => 'required|confirmed|min:6',
-	// 	]);
-	// }
+class Areas implements AreasContract {	
 
 	/**
 	 * Create a new user instance after a valid registration.
@@ -29,8 +21,6 @@ class Areas implements AreasContract {
 	 */
 	public function create(array $data)
 	{
-		
-		//print_r($data);exit;
 		if(Area::create([
 			'image_text' 	=> $data['image_text'],
 			'description' 	=> $data['description'],
