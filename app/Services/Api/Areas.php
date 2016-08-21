@@ -64,7 +64,7 @@ class Areas implements AreasContract {
 	 */
 	public function find($id){
 		$areas = DB::table('areas')
-                     ->select(DB::raw('id, image_text, description,lat, lng'))
+                     ->select(DB::raw('id, description,lat, lng'))
                      ->where('id', '=', $id)
                      ->get();
 
